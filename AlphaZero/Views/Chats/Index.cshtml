@@ -1,0 +1,80 @@
+﻿
+@model IEnumerable<AlphaZero.Models.Chat>
+
+@using Microsoft.AspNetCore.Identity;
+@inject UserManager<ApplicationUser> UserManager;
+
+
+@if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+{
+
+    <p>
+        <a asp-action="Create">Create New</a>
+    </p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Reply)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Message)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Reply)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Message)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+}
+@{
+    ViewData["Title"] = "Home Page";
+}
+<br />
+
+
+<div class="container">
+
+    <div class="col-md-12">
+
+        <textarea id="displaymessage" cols="100" rows="20">Hello @UserManager.GetUserName(User), how may I assist you today?@Html.Raw("\n")  
+Press 1 if you are having technical problems @Html.Raw("\n")
+Press 2 if you are having payment problems @Html.Raw("\n")
+Press 3 if you are having problems logging in @Html.Raw("\n")
+Press 4 if you are having problems displaying products @Html.Raw("\n")
+Press 5 if you are having problems arranging the display @Html.Raw("\n")
+Press 6 if you are having problems with download speed @Html.Raw("\n")
+Press 7 if you are having problems viewing images @Html.Raw("\n")
+Press 8 if you are having problems viewing the video @Html.Raw("\n")
+Press 9 if you are facing personal problems and need someone to talk to @Html.Raw("\n")
+
+
+</textarea>
+
+        <br />
+        <label> Message :</label> <input type="text" id="message" style="width:500px" />
+        <input id="Send" type="button" value="Send" />
+
+    </div>
+
+</div>
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/js/JavaScript.js"></script>
